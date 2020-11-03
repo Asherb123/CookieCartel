@@ -1,5 +1,7 @@
 package DefaultPackage;
 
+import java.awt.Graphics;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,12 +17,15 @@ JFrame frame;
 
 public static final int HEIGHT = 500;
 public static final int WIDTH = 800;
+GamePanel gamep; 
+
+
 
 public CookieCartel() {
 	
  frame = new JFrame();
-	
-	
+	gamep = new GamePanel();
+	frame.add(gamep);
 	
 	
 	
