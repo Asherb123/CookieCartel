@@ -14,7 +14,7 @@ public class CookieCartel {
 	}
 
 	JFrame frame;
-
+	
 	public static final int HEIGHT = 500;
 	public static final int WIDTH = 800;
 	GamePanel gamep;
@@ -24,7 +24,7 @@ public class CookieCartel {
 		frame = new JFrame();
 		gamep = new GamePanel();
 		frame.add(gamep);
-
+		frame.addKeyListener(gamep);
 	}
 
 	void setUp() {
