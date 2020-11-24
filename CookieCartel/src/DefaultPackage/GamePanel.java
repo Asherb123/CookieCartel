@@ -30,19 +30,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titleFont; 
 	Font titlefont;
 	Timer frameDraw;
+	Cookie cookie;
+	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		titlefont = new Font("Arial", Font.PLAIN, 60);
 		frameDraw = new Timer(1000/60,this);
 	    frameDraw.start();
-	
+	cookie = new Cookie(250, 700, 50, 50);
 	
 	}
 
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
-
+	
+	
+	
 	int currentState = MENU;
 
 	void upadateMenuState() {
@@ -77,7 +81,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, CookieCartel.WIDTH, CookieCartel.HEIGHT);
 		
-		
+		cookie.draw(g);
 		
 	}
 	
@@ -89,6 +93,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.YELLOW);
 		g.drawString("Haha You Suck", 175, 100);
 		
+		g.setFont(titleFont);
+		g.setColor(Color.YELLOW);
+		g.drawString("Your Street Value Was   ", 100, 300);
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
