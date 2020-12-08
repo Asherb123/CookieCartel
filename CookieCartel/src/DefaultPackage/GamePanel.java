@@ -31,14 +31,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titlefont;
 	Timer frameDraw;
 	Cookie cookie;
+	Grandmas gramRight;
+	Grandmas gramWGun;
 	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		titlefont = new Font("Arial", Font.PLAIN, 60);
 		frameDraw = new Timer(1000/60,this);
 	    frameDraw.start();
-	cookie = new Cookie(360, 230, 50, 50);
-	
+	cookie = new Cookie(260, 100, 300, 300);
+	gramRight = new Grandmas(575, 125, 200, 200, "right");
+	gramWGun = new Grandmas(40, 125, 200, 200, "left");
 	}
 
 	final int MENU = 0;
@@ -78,11 +81,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void drawGameState(Graphics g) {
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, CookieCartel.WIDTH, CookieCartel.HEIGHT);
 		
 		cookie.draw(g);
-		
+		gramRight.Draw(g);
+		gramWGun.Draw(g);
 		
 	}
 	
