@@ -25,6 +25,9 @@ public class CookieCartel {
 		gamep = new GamePanel();
 		frame.add(gamep);
 		frame.addKeyListener(gamep);
+		frame.addMouseListener(gamep);
+		frame.addMouseMotionListener(gamep);
+		
 	}
 
 	void setUp() {

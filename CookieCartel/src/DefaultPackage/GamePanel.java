@@ -7,14 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener {
+public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -33,6 +35,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Cookie cookie;
 	Grandmas gramRight;
 	Grandmas gramWGun;
+	int streetv = 0;
+	RollingPin rollpin;
 	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -42,6 +46,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	cookie = new Cookie(260, 100, 300, 300);
 	gramRight = new Grandmas(575, 125, 200, 200, "right");
 	gramWGun = new Grandmas(40, 125, 200, 200, "left");
+	rollpin = new RollingPin(69, 420, 10, 10);
 	}
 
 	final int MENU = 0;
@@ -87,6 +92,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		cookie.draw(g);
 		gramRight.Draw(g);
 		gramWGun.Draw(g);
+		rollpin.draw(g);
 		
 	}
 	
@@ -140,6 +146,51 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		repaint();
 		
 		System.out.println("Action");
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		rollpin.update(e.getX(), e.getY());
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		if (cookie.collisionBox.intersects(rollpin.collisionBox)) {
+			streetv=streetv+1;
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
