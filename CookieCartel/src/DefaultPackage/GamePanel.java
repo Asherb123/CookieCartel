@@ -13,6 +13,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -37,6 +39,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Grandmas gramWGun;
 	int streetv = 0;
 	RollingPin rollpin;
+	int mult = 1;
+	
+	
+	
 	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -94,6 +100,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		gramWGun.Draw(g);
 		rollpin.draw(g);
 		
+		
+		g.setFont(titleFont);
+		g.setColor(Color.BLACK);
+		g.drawString("Street Value= "+streetv, 10, 40);
 	}
 	
 	void drawEndState(Graphics g) {
@@ -165,8 +175,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (cookie.collisionBox.intersects(rollpin.collisionBox)) {
-			streetv=streetv+1;
+			streetv=streetv+mult;
 		}
+	if (streetv==50) {
+		
+		JOptionPane.showMessageDialog(null, "Looks like you're making some dough! Here's your first Grandma");
+		
+		mult=2;
+		streetv=0;
+		
+	}
+	 
+	
+	
+	
 	}
 
 	@Override
