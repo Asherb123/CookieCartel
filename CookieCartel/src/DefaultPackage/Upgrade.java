@@ -1,6 +1,9 @@
 package DefaultPackage;
 
+import java.awt.Color;
 import java.awt.Graphics;
+
+import javax.swing.Box.Filler;
 
 public class Upgrade extends GameObject {
 
@@ -10,6 +13,9 @@ public class Upgrade extends GameObject {
 	}
 	void draw(Graphics g) {
 		
+		g.setColor(Color.BLUE);
+
+		g.drawRect(10, 400, 25, 25);
 		
 		
 		

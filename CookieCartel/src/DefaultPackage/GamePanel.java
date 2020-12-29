@@ -53,11 +53,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	gramRight = new Grandmas(575, 125, 200, 200, "right");
 	gramWGun = new Grandmas(40, 125, 200, 200, "left");
 	rollpin = new RollingPin(69, 420, 10, 10);
+	
+	
 	}
 
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
+	
+	
+		
+		
+		
+		
+	
 	
 	
 	
@@ -104,6 +113,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Street Value= "+streetv, 10, 40);
+		
+		
 	}
 	
 	void drawEndState(Graphics g) {
