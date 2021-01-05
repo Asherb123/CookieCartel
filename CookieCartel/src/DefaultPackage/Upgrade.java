@@ -13,9 +13,9 @@ public class Upgrade extends GameObject {
 	}
 	void draw(Graphics g) {
 		
-		g.setColor(Color.BLUE);
+		g.setColor(Color.YELLOW);
 
-		g.drawRect(10, 400, 25, 25);
+		g.fillRect(x, y, width, height);
 		
 		
 		

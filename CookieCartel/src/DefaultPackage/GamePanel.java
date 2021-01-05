@@ -22,54 +22,54 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if(currentState == MENU){
-		    drawMenuState(g);
-		}else if(currentState == GAME){
-		    drawGameState(g);
-		}else if(currentState == END){
-		    drawEndState(g);
+		if (currentState == MENU) {
+			drawMenuState(g);
+		} else if (currentState == GAME) {
+			drawGameState(g);
+		} else if (currentState == END) {
+			drawEndState(g);
 		}
 	}
 
-	Font titleFont; 
+	Font titleFont;
 	Font titlefont;
+
 	Timer frameDraw;
+	Timer gameTime;
+	int countdown;
+
 	Cookie cookie;
 	Grandmas gramRight;
 	Grandmas gramWGun;
+
 	int streetv = 0;
 	RollingPin rollpin;
 	int mult = 1;
-	
-	
-	
-	
+
+	Upgrade firstUp;
+	Upgrade secondUp;
+	Upgrade thirdUp;
+	Upgrade fourthUp;
+
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		titlefont = new Font("Arial", Font.PLAIN, 60);
-		frameDraw = new Timer(1000/60,this);
-	    frameDraw.start();
-	cookie = new Cookie(260, 100, 300, 300);
-	gramRight = new Grandmas(575, 125, 200, 200, "right");
-	gramWGun = new Grandmas(40, 125, 200, 200, "left");
-	rollpin = new RollingPin(69, 420, 10, 10);
-	
-	
+		frameDraw = new Timer(1000 / 60, this);
+		frameDraw.start();
+		cookie = new Cookie(260, 100, 300, 300);
+		gramRight = new Grandmas(575, 125, 200, 200, "right");
+		gramWGun = new Grandmas(40, 125, 200, 200, "left");
+		rollpin = new RollingPin(69, 420, 10, 10);
+		firstUp = new Upgrade(25, 400, 150, 50);
+		secondUp = new Upgrade(210, 400, 150, 50);
+		thirdUp = new Upgrade(435, 400, 150, 50);
+		fourthUp = new Upgrade(620, 400, 150, 50);
 	}
 
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
-	
-	
-		
-		
-		
-		
-	
-	
-	
-	
+
 	int currentState = MENU;
 
 	void upadateMenuState() {
@@ -84,51 +84,54 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	}
 
-	
-	
-	
 	void drawMenuState(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, CookieCartel.WIDTH, CookieCartel.HEIGHT);
-		
+
 		g.setFont(titlefont);
 		g.setColor(Color.YELLOW);
 		g.drawString("COOKIE CARTEL", 175, 100);
-		
+
 		g.setFont(titleFont);
 		g.drawString("Press ENTER to Start", 175, 250);
 		g.drawString("Press SPACE For Instructions", 90, 400);
 	}
-	
+
 	void drawGameState(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, CookieCartel.WIDTH, CookieCartel.HEIGHT);
-		
+
 		cookie.draw(g);
 		gramRight.Draw(g);
 		gramWGun.Draw(g);
 		rollpin.draw(g);
-		
-		
+
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
-		g.drawString("Street Value= "+streetv, 10, 40);
+		g.drawString("Street Value= " + streetv, 10, 40);
+
+		firstUp.draw(g);
+		secondUp.draw(g);
+		thirdUp.draw(g);
+		fourthUp.draw(g);
 		
-		
+		g.setColor(Color.BLACK);
+		g.drawString(""+countdown, 700, 45);
 	}
-	
+
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillRect(0, 0, CookieCartel.WIDTH,CookieCartel.HEIGHT);
-		
+		g.fillRect(0, 0, CookieCartel.WIDTH, CookieCartel.HEIGHT);
+
 		g.setFont(titlefont);
 		g.setColor(Color.YELLOW);
 		g.drawString("Haha You Suck", 175, 100);
-		
+
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
 		g.drawString("Your Street Value Was   ", 100, 300);
 	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -138,13 +141,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
-		    if (currentState == END) {
-		        currentState = MENU;
-		    } else {
-		        currentState++;
-		    }
-		}   
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (currentState == END) {
+				currentState = MENU;
+		
+			
+			} 
+			else if (currentState==MENU) {
+				countdown=60;
+				gameTime = new Timer(1000, this);
+				currentState=GAME;
+				gameTime.start();
+			}
+			else {
+				currentState++;
+			}
+			
+		}
 	}
 
 	@Override
@@ -156,74 +169,81 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(currentState == MENU){
-		    upadateMenuState();
-		}else if(currentState == GAME){
-		    updateGameState();
-		}else if(currentState == END){
-		    upadateEndState();
-		
+		if (currentState == MENU) {
+			upadateMenuState();
+		} else if (currentState == GAME) {
+			updateGameState();
+		} else if (currentState == END) {
+			upadateEndState();
+
 		}
-		repaint();
 		
+		
+		if (e.getSource()==gameTime) {
+			countdown=countdown-1;
+		}
+		
+		if (countdown==0 && currentState==GAME) {
+			currentState=END;
+		}
+		
+		repaint();
+
 		System.out.println("Action");
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		rollpin.update(e.getX(), e.getY());
-		
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (cookie.collisionBox.intersects(rollpin.collisionBox)) {
-			streetv=streetv+mult;
+			streetv = streetv + mult;
 		}
-	if (streetv==50) {
-		
-		JOptionPane.showMessageDialog(null, "Looks like you're making some dough! Here's your first Grandma");
-		
-		mult=2;
-		streetv=0;
-		
-	}
-	 
-	
-	
-	
+		if (streetv == 50) {
+
+			JOptionPane.showMessageDialog(null, "Looks like you're making some dough! Here's your first Grandma");
+
+			mult = 2;
+			streetv = 0;
+
+		}
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
