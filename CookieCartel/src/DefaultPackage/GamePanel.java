@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		cookie = new Cookie(260, 100, 300, 300);
 		gramRight = new Grandmas(575, 125, 200, 200, "right");
 		gramWGun = new Grandmas(40, 125, 200, 200, "left");
-		rollpin = new RollingPin(69, 420, 10, 10);
+		rollpin = new RollingPin(69, 420, 60, 60);
 		firstUp = new Upgrade(25, 400, 150, 50);
 		secondUp = new Upgrade(210, 400, 150, 50);
 		thirdUp = new Upgrade(435, 400, 150, 50);
@@ -115,6 +115,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		thirdUp.draw(g);
 		fourthUp.draw(g);
 		
+		
+		
 		g.setColor(Color.BLACK);
 		g.drawString(""+countdown, 700, 45);
 	}
@@ -129,7 +131,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
-		g.drawString("Your Street Value Was   ", 100, 300);
+		g.drawString("Your Street Value Was "+streetv, 100, 300);
 	}
 
 	@Override
@@ -157,7 +159,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 				currentState++;
 			}
 			
-		}
+		}	
+		
+			if (currentState==MENU && e.getKeyCode()== KeyEvent.VK_SPACE) {
+				JOptionPane.showMessageDialog(null, "You are now the leader of a Cookie Cartel. \n Click the cookie, and you and your grandmas will bake cookies, which will make your street value go up. \n Every grandma takes money out of your street value. Generate as much street value as possible in the time given!");
+				
+			}
+			
+			if (currentState==GAME &&  e.getKeyCode()== KeyEvent.VK_ENTER) {
+				streetv=0;
+			}
+	
 	}
 
 	@Override
@@ -185,6 +197,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		
 		if (countdown==0 && currentState==GAME) {
 			currentState=END;
+			
 		}
 		
 		repaint();
@@ -213,10 +226,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}
 		if (streetv == 50) {
 
-			JOptionPane.showMessageDialog(null, "Looks like you're making some dough! Here's your first Grandma");
+			
 
 			mult = 2;
-			streetv = 0;
+			streetv = streetv - 50;
 
 		}
 
