@@ -1,5 +1,6 @@
 package DefaultPackage;
 
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,9 +11,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Random;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
+import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -51,6 +54,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Upgrade thirdUp;
 	Upgrade fourthUp;
 
+	Random rand;
+	
+	private void playSound() {
+	     AudioClip sound = JApplet.newAudioClip(getClass().getResource("dopeSong.mp3"));
+	     sound.play();
+	}
+	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		titlefont = new Font("Arial", Font.PLAIN, 60);
@@ -60,10 +70,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		gramRight = new Grandmas(575, 125, 200, 200, "right");
 		gramWGun = new Grandmas(40, 125, 200, 200, "left");
 		rollpin = new RollingPin(69, 420, 60, 60);
-		firstUp = new Upgrade(25, 400, 150, 50);
-		secondUp = new Upgrade(210, 400, 150, 50);
-		thirdUp = new Upgrade(435, 400, 150, 50);
-		fourthUp = new Upgrade(620, 400, 150, 50);
+		firstUp = new Upgrade(315, 400, 175, 50);
+		//secondUp = new Upgrade(210, 400, 150, 50);
+		//thirdUp = new Upgrade(435, 400, 150, 50);
+		//fourthUp = new Upgrade(620, 400, 150, 50);
+		
+		 rand = new Random();
+		 
 	}
 
 	final int MENU = 0;
@@ -95,6 +108,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.setFont(titleFont);
 		g.drawString("Press ENTER to Start", 175, 250);
 		g.drawString("Press SPACE For Instructions", 90, 400);
+		
 	}
 
 	void drawGameState(Graphics g) {
@@ -104,17 +118,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		cookie.draw(g);
 		gramRight.Draw(g);
 		gramWGun.Draw(g);
-		rollpin.draw(g);
+		
 
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Street Value= " + streetv, 10, 40);
 
 		firstUp.draw(g);
-		secondUp.draw(g);
-		thirdUp.draw(g);
-		fourthUp.draw(g);
 		
+		
+		
+		//secondUp.draw(g);
+		//thirdUp.draw(g);
+		//fourthUp.draw(g);
+		rollpin.draw(g);
 		
 		
 		g.setColor(Color.BLACK);
@@ -146,7 +163,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
 				currentState = MENU;
-		
+				
+				playSound();
 			
 			} 
 			else if (currentState==MENU) {
@@ -221,18 +239,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (cookie.collisionBox.intersects(rollpin.collisionBox)) {
+		if (cookie.collisionBox.intersects(rollpin.collisionBox ) && currentState==GAME) {
 			streetv = streetv + mult;
 		}
-		if (streetv == 50) {
-
+		
+		if (rollpin.collisionBox.intersects(firstUp.collisionBox)&&streetv>=firstUp.gramCost) {
 			
-
-			mult = 2;
-			streetv = streetv - 50;
-
+			streetv=streetv-firstUp.gramCost;
+			firstUp.gramCost=firstUp.gramCost+50+rand.nextInt(50+1);
+				mult=mult+1;	
+					
+			
+					
 		}
-
+		
+	
+	
 	}
 
 	@Override
