@@ -45,6 +45,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Grandmas gramRight;
 	Grandmas gramWGun;
 
+	OtherImages card;
+	OtherImages money1;
+	OtherImages Sugar1;
+	OtherImages Sugar2;
+	
+	
+	
 	int streetv = 0;
 	RollingPin rollpin;
 	int mult = 1;
@@ -55,12 +62,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Upgrade fourthUp;
 
 	Random rand;
+
 	
-	private void playSound() {
-	     AudioClip sound = JApplet.newAudioClip(getClass().getResource("dopeSong.mp3"));
-	     sound.play();
-	}
-	
+
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		titlefont = new Font("Arial", Font.PLAIN, 60);
@@ -71,12 +75,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		gramWGun = new Grandmas(40, 125, 200, 200, "left");
 		rollpin = new RollingPin(69, 420, 60, 60);
 		firstUp = new Upgrade(315, 400, 175, 50);
-		//secondUp = new Upgrade(210, 400, 150, 50);
-		//thirdUp = new Upgrade(435, 400, 150, 50);
-		//fourthUp = new Upgrade(620, 400, 150, 50);
+
+		card = new OtherImages(50, 50, 100, 100);
+		money1 = new OtherImages (50, 50, 100, 100);
 		
-		 rand = new Random();
-		 
+		rand = new Random();
+
+		
 	}
 
 	final int MENU = 0;
@@ -108,7 +113,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.setFont(titleFont);
 		g.drawString("Press ENTER to Start", 175, 250);
 		g.drawString("Press SPACE For Instructions", 90, 400);
-		
+
 	}
 
 	void drawGameState(Graphics g) {
@@ -118,24 +123,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		cookie.draw(g);
 		gramRight.Draw(g);
 		gramWGun.Draw(g);
-		
 
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Street Value= " + streetv, 10, 40);
 
 		firstUp.draw(g);
-		
-		
-		
-		//secondUp.draw(g);
-		//thirdUp.draw(g);
-		//fourthUp.draw(g);
+
+		if (streetv == firstUp.gramCost) {
+			// firstUp.setColor(Color.GREEN);
+		}
+
+		// secondUp.draw(g);
+		// thirdUp.draw(g);
+		// fourthUp.draw(g);
 		rollpin.draw(g);
-		
-		
+
 		g.setColor(Color.BLACK);
-		g.drawString(""+countdown, 700, 45);
+		g.drawString("" + countdown, 700, 45);
 	}
 
 	void drawEndState(Graphics g) {
@@ -148,7 +153,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
-		g.drawString("Your Street Value Was "+streetv, 100, 300);
+		g.drawString("Your Street Value Was $" + streetv, 100, 300);
 	}
 
 	@Override
@@ -163,31 +168,28 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
 				currentState = MENU;
-				
-				playSound();
-			
-			} 
-			else if (currentState==MENU) {
-				countdown=60;
+
+			} else if (currentState == MENU) {
+				countdown = 60;
 				gameTime = new Timer(1000, this);
-				currentState=GAME;
+				currentState = GAME;
 				gameTime.start();
-			}
-			else {
+			} else {
 				currentState++;
 			}
-			
-		}	
-		
-			if (currentState==MENU && e.getKeyCode()== KeyEvent.VK_SPACE) {
-				JOptionPane.showMessageDialog(null, "You are now the leader of a Cookie Cartel. \n Click the cookie, and you and your grandmas will bake cookies, which will make your street value go up. \n Every grandma takes money out of your street value. Generate as much street value as possible in the time given!");
-				
-			}
-			
-			if (currentState==GAME &&  e.getKeyCode()== KeyEvent.VK_ENTER) {
-				streetv=0;
-			}
-	
+
+		}
+
+		if (currentState == MENU && e.getKeyCode() == KeyEvent.VK_SPACE) {
+			JOptionPane.showMessageDialog(null,
+					"You are now the leader of a Cookie Cartel. \n Click the cookie, and you and your grandmas will bake cookies, which will make your street value go up. \n Every grandma takes money out of your street value. Generate as much street value as possible in the time given!");
+
+		}
+
+		if (currentState == GAME && e.getKeyCode() == KeyEvent.VK_ENTER) {
+			streetv = 0;
+		}
+
 	}
 
 	@Override
@@ -207,20 +209,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			upadateEndState();
 
 		}
-		
-		
-		if (e.getSource()==gameTime) {
-			countdown=countdown-1;
+
+		if (e.getSource() == gameTime) {
+			countdown = countdown - 1;
 		}
-		
-		if (countdown==0 && currentState==GAME) {
-			currentState=END;
-			
+
+		if (countdown == 0 && currentState == GAME) {
+			currentState = END;
+
 		}
-		
+
 		repaint();
 
-		System.out.println("Action");
 	}
 
 	@Override
@@ -239,22 +239,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (cookie.collisionBox.intersects(rollpin.collisionBox ) && currentState==GAME) {
+		if (cookie.collisionBox.intersects(rollpin.collisionBox) && currentState == GAME) {
 			streetv = streetv + mult;
 		}
-		
-		if (rollpin.collisionBox.intersects(firstUp.collisionBox)&&streetv>=firstUp.gramCost) {
-			
-			streetv=streetv-firstUp.gramCost;
-			firstUp.gramCost=firstUp.gramCost+50+rand.nextInt(50+1);
-				mult=mult+1;	
-					
-			
-					
+
+		if (rollpin.collisionBox.intersects(firstUp.collisionBox) && streetv >= firstUp.gramCost) {
+
+			streetv = streetv - firstUp.gramCost;
+			firstUp.gramCost = firstUp.gramCost + 50 + rand.nextInt(50 + 1);
+			mult = mult + 1;
+
 		}
-		
-	
-	
+
 	}
 
 	@Override

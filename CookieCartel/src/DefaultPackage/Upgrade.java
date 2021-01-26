@@ -26,14 +26,20 @@ public class Upgrade extends GameObject {
 		
 		g.setColor(Color.YELLOW);
 
+	
+			
+		
 		g.fillRect(x, y, width, height);
 		
 		
-		
-		
-		
-		
+	
 	}
+		
+		
+		
+		
+//	}
+
 void update() {
 	
 	
