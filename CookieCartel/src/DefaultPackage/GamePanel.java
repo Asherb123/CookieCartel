@@ -11,15 +11,21 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
 import java.util.Random;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.io.File;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
 
@@ -49,12 +55,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	OtherImages money1;
 	OtherImages Sugar1;
 	OtherImages Sugar2;
-	
-	
-	
+
 	int streetv = 0;
 	RollingPin rollpin;
 	int mult = 1;
+	int gramCount;
 
 	Upgrade firstUp;
 	Upgrade secondUp;
@@ -63,8 +68,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	Random rand;
 
-	
-
+	Song song; 
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		titlefont = new Font("Arial", Font.PLAIN, 60);
@@ -76,12 +80,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		rollpin = new RollingPin(69, 420, 60, 60);
 		firstUp = new Upgrade(315, 400, 175, 50);
 
-		card = new OtherImages(50, 50, 100, 100);
-		money1 = new OtherImages (50, 50, 100, 100);
-		
-		rand = new Random();
+		card = new OtherImages(75, 75, 100, 100,"card.png" );
+		money1 = new OtherImages(75, 75, 100, 150, "money1.png");
+		Sugar1 = new OtherImages(75, 75, 100, 100, "sugar1.png");
+		Sugar2 = new OtherImages(75, 75, 100, 100, "sugar2.png");
 
-		
+		rand = new Random();
+			song = new Song("dopeSong.mp3");
+			song.play();
 	}
 
 	final int MENU = 0;
@@ -90,11 +96,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	int currentState = MENU;
 
+
+	
+	
+	
+	
 	void upadateMenuState() {
 
 	}
 
 	void updateGameState() {
+		if (streetv >= firstUp.gramCost) {
+			firstUp.isReady = true;
+		} else {
+			firstUp.isReady = false;
+		}
 
 	}
 
@@ -114,6 +130,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.drawString("Press ENTER to Start", 175, 250);
 		g.drawString("Press SPACE For Instructions", 90, 400);
 
+		card.draw(g);
+		money1.draw(g);
+
 	}
 
 	void drawGameState(Graphics g) {
@@ -126,7 +145,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
-		g.drawString("Street Value= " + streetv, 10, 40);
+		g.drawString("Street Value = $" + streetv, 10, 40);
 
 		firstUp.draw(g);
 
@@ -141,6 +160,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setColor(Color.BLACK);
 		g.drawString("" + countdown, 700, 45);
+
+		g.drawString("Grandma Count = " + gramCount, 10, 75);
 	}
 
 	void drawEndState(Graphics g) {
@@ -174,6 +195,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 				gameTime = new Timer(1000, this);
 				currentState = GAME;
 				gameTime.start();
+				firstUp.gramCost = 50;
+				gramCount = 0;
+				mult = 1;
 			} else {
 				currentState++;
 			}
@@ -249,7 +273,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			firstUp.gramCost = firstUp.gramCost + 50 + rand.nextInt(50 + 1);
 			mult = mult + 1;
 
+			grandma();
+
 		}
+
+	}
+
+	void grandma() {
+
+		gramCount = mult - 1;
 
 	}
 

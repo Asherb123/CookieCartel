@@ -14,21 +14,19 @@ public class CookieCartel {
 
 		CookieCartel c = new CookieCartel();
 		c.setUp();
-		
+
 	}
 
 	JFrame frame;
-	
+
 	BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-	Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-		    cursorImg, new Point(0, 0), "blank cursor");
-	
-	
+	Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
+
 	public static final int HEIGHT = 500;
 	public static final int WIDTH = 800;
 	GamePanel gamep;
-	
-public CookieCartel() {
+
+	public CookieCartel() {
 
 		frame = new JFrame();
 		gamep = new GamePanel();
@@ -36,7 +34,7 @@ public CookieCartel() {
 		frame.addKeyListener(gamep);
 		frame.addMouseListener(gamep);
 		frame.addMouseMotionListener(gamep);
-		
+
 	}
 
 	void setUp() {
@@ -45,7 +43,7 @@ public CookieCartel() {
 
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-	
+
 		frame.getContentPane().setCursor(blankCursor);
 	}
 

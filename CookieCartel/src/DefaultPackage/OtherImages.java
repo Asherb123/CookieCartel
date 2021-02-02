@@ -8,24 +8,16 @@ import javax.imageio.ImageIO;
 
 public class OtherImages extends GameObject {
 
-	public OtherImages(int x, int y, int width, int height) {
-		super(x, y, width, height);
+	String imageName;
+	public OtherImages(int x, int y, int width, int height, String imageName) {
+	super(x, y, width, height);
 		// TODO Auto-generated constructor stub
-	
+	this.imageName=imageName;
 		if (needImage) {
-		    loadImage ("Sugar2.png");
-		}
-		else {
-			loadImage ("Sugar1.png");
+		    loadImage (imageName);
 		}
 		
-		if (gotImage) {
-			loadImage ("money1.png");
-		}
-
-		if (gotImage) {
-			loadImage ("card.png");
-		}
+		
 	}
 
 	public static BufferedImage image;
