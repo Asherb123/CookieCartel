@@ -16,7 +16,6 @@ import java.util.Random;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -51,8 +50,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Grandmas gramRight;
 	Grandmas gramWGun;
 
-	OtherImages card;
+	OtherImages GRAMKNIFE;
+	OtherImages dead;
+	OtherImages DOPEGRAM;
+	OtherImages DOPE;
+	OtherImages DOPEr;
 	OtherImages money1;
+	OtherImages money;
+
 	OtherImages Sugar1;
 	OtherImages Sugar2;
 
@@ -68,7 +73,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	Random rand;
 
-	Song song; 
+	Song song;
+
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		titlefont = new Font("Arial", Font.PLAIN, 60);
@@ -80,14 +86,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		rollpin = new RollingPin(69, 420, 60, 60);
 		firstUp = new Upgrade(315, 400, 175, 50);
 
-		card = new OtherImages(75, 75, 100, 100,"card.png" );
-		money1 = new OtherImages(75, 75, 100, 150, "money1.png");
-		Sugar1 = new OtherImages(75, 75, 100, 100, "sugar1.png");
-		Sugar2 = new OtherImages(75, 75, 100, 100, "sugar2.png");
+		dead = new OtherImages(75, 50, 350, 350, "body.png");
+
+		GRAMKNIFE = new OtherImages(300, 60, 350, 350, "GRAMKNIFE.png");
+
+		DOPEGRAM = new OtherImages(200, 60, 300, 300, "DOPEGRAM.png");
+
+		DOPE = new OtherImages(75, 40, 150, 150, "DOPEGRAM.png");
+
+		DOPEr = new OtherImages(15, 10, 75, 75, "DOPEGRAM.png");
+
+		money1 = new OtherImages(450, 60, 300, 300, "money1.png");
+
+		money = new OtherImages(600, 100, 80, 80, "money1.png");
+
+		Sugar1 = new OtherImages(75, 250, 100, 100, "sugar1.png");
+
+		Sugar2 = new OtherImages(75, 350, 100, 100, "sugar2.png");
 
 		rand = new Random();
-			song = new Song("dopeSong.mp3");
-			song.play();
+
+		song = new Song("dopeSong.mp3");
+
+		song.play();
 	}
 
 	final int MENU = 0;
@@ -96,11 +117,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	int currentState = MENU;
 
-
-	
-	
-	
-	
 	void upadateMenuState() {
 
 	}
@@ -124,13 +140,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(titlefont);
 		g.setColor(Color.YELLOW);
-		g.drawString("COOKIE CARTEL", 175, 100);
+		g.drawString("COOKIE CARTEL", 160, 50);
 
 		g.setFont(titleFont);
-		g.drawString("Press ENTER to Start", 175, 250);
-		g.drawString("Press SPACE For Instructions", 90, 400);
+		g.drawString("Press ENTER to Start", 175, 400);
+		g.drawString("Press SPACE For Instructions", 90, 450);
 
-		card.draw(g);
+		DOPEGRAM.draw(g);
+		DOPE.draw(g);
+		DOPEr.draw(g);
 		money1.draw(g);
 
 	}
@@ -170,11 +188,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(titlefont);
 		g.setColor(Color.YELLOW);
-		g.drawString("Haha You Suck", 175, 100);
+		g.drawString("You Suck!!", 175, 50);
 
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
-		g.drawString("Your Street Value Was $" + streetv, 100, 300);
+		g.drawString("Your Street Value Was $" + streetv, 110, 450);
+
+		GRAMKNIFE.draw(g);
+		dead.draw(g);
 	}
 
 	@Override

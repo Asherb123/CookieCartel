@@ -20,9 +20,9 @@ public class OtherImages extends GameObject {
 		
 	}
 
-	public static BufferedImage image;
-	public static boolean needImage = true;
-	public static boolean gotImage = false;	
+	public  BufferedImage image;
+	public  boolean needImage = true;
+	public  boolean gotImage = false;	
 	
 	void draw(Graphics g) {
 		
