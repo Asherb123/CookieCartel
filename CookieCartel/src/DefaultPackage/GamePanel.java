@@ -57,7 +57,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	OtherImages DOPEr;
 	OtherImages money1;
 	OtherImages money;
-
+	OtherImages air;
+	
+	
 	OtherImages Sugar1;
 	OtherImages Sugar2;
 
@@ -104,6 +106,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		Sugar2 = new OtherImages(75, 350, 100, 100, "sugar2.png");
 
+		air=new OtherImages(250, 75, 325, 325, "airmoney.png");
+		
+		
 		rand = new Random();
 
 		song = new Song("dopeSong.mp3");
@@ -156,11 +161,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	void drawGameState(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, CookieCartel.WIDTH, CookieCartel.HEIGHT);
-
+air.draw(g);
 		cookie.draw(g);
 		gramRight.Draw(g);
 		gramWGun.Draw(g);
 
+			
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Street Value = $" + streetv, 10, 40);
